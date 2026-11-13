@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Small Improvement Store</title>
+<meta name="description" content="Practical ebooks from the Small Improvement YouTube channel. Tiny changes for your money, career, focus, energy and relationships.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Brand world from the ebook cover: deep navy night, gold sun, cream pages. One theme on purpose. */
+  --navy: #181C2C;
+  --navy-2: #232A42;
+  --gold: #F2B33D;
+  --gold-deep: #C98A0E;
+  --cream: #FBF7F0;
+  --ink: #1E2233;
+  --muted: #5E6274;
+  --line: #E7E0D2;
+  --money: #2F8F6F; --career: #3B6EA8; --focus: #6B5CA8; --energy: #E07B39; --people: #C2577A;
+  --display: "Archivo", "Arial Black", system-ui, sans-serif;
+  --body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+section[id], main[id] { scroll-margin-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body { margin: 0; overflow-x: clip; background: var(--cream); color: var(--ink); font: 400 17px/1.6 var(--body); }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.08; text-wrap: balance; margin: 0; }
+.wrap { width: min(1120px, 100% - 40px); margin-inline: auto; }
+
+/* binary texture, drawn once by script into a data URL */
+.bits { background-color: var(--navy); background-repeat: repeat; }
+
+/* header */
+.top { position: sticky; top: 0; z-index: 10; background: rgba(24,28,44,.94); backdrop-filter: blur(8px); color: var(--cream); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 700 18px var(--display); letter-spacing: -.01em; }
+.brand img { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--gold); }
+.nav { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.nav a { text-decoration: none; font-weight: 500; font-size: 15px; padding: 8px 12px; border-radius: 999px; color: #D9DCEA; }
+.nav a:hover { background: rgba(255,255,255,.08); color: #fff; }
+.nav a.cta { background: var(--gold); color: var(--navy); font-weight: 700; }
+
+/* hero */
+.hero { color: var(--cream); padding: 64px 0 72px; overflow: hidden; }
+.hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
+.eyebrow { font: 700 13px var(--body); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.hero h1 { font-size: clamp(42px, 6.4vw, 78px); font-weight: 900; letter-spacing: -.02em; margin: 14px 0 18px; }
+.hero h1 em { font-style: normal; color: var(--gold); }
+.hero p.lead { font-size: 19px; color: #CDD1E2; max-width: 34em; margin: 0 0 28px; }
+.btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 700 17px var(--body); padding: 15px 24px; border-radius: 14px; transition: transform .15s ease, box-shadow .15s ease; }
+.btn:hover { transform: translateY(-2px); }
+.btn-gold { background: var(--gold); color: var(--navy); box-shadow: 0 10px 28px rgba(242,179,61,.28); }
+.btn-ghost { border: 1.5px solid rgba(255,255,255,.28); color: var(--cream); }
+.btn-dark { background: var(--navy); color: var(--cream); }
+.hero-book { justify-self: center; position: relative; }
+.hero-book::before { content: ""; position: absolute; inset: 8% -12% -4%; background: radial-gradient(closest-side, rgba(242,179,61,.38), transparent); z-index: 0; }
+.hero-book img { position: relative; width: min(340px, 78vw); border-radius: 10px; box-shadow: 0 30px 60px rgba(0,0,0,.45); transform: rotate(-2.5deg); }
+.trust { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 26px; font-size: 14.5px; color: #B9BED3; }
+.trust span::before { content: "✓"; color: var(--gold); font-weight: 700; margin-right: 7px; }
+
+/* sections */
+section.band { padding: 80px 0; }
+.sec-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 34px; }
+.sec-head h2 { font-size: clamp(30px, 4vw, 44px); font-weight: 900; letter-spacing: -.015em; }
+.sec-head p { margin: 8px 0 0; color: var(--muted); max-width: 36em; }
+
+/* product grid */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
+.card { background: #fff; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; }
+.card .art { background: var(--navy); padding: 26px 26px 0; display: grid; place-items: center; }
+.card .art img { width: 62%; border-radius: 6px 6px 0 0; box-shadow: 0 -6px 30px rgba(0,0,0,.35); }
+.card .body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.chip { align-self: flex-start; font: 700 12px var(--body); letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: #FFF1D3; color: var(--gold-deep); }
+.card h3 { font-size: 21px; font-weight: 700; }
+.card p { margin: 0; color: var(--muted); font-size: 15.5px; }
+.card .row { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 10px; }
+.price { font: 900 26px var(--display); font-variant-numeric: tabular-nums; }
+.card .btn { padding: 11px 18px; font-size: 15.5px; border-radius: 12px; }
+.card.soon { background: transparent; border: 2px dashed #D6CDBB; justify-content: center; align-items: center; text-align: center; padding: 34px 26px; gap: 12px; }
+.card.soon img { width: 70px; }
+.card.soon h3 { font-size: 20px; }
+
+/* product detail */
+.detail { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.detail-top { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; align-items: start; }
+.detail-top .cover img { border-radius: 10px; box-shadow: 0 24px 50px rgba(24,28,44,.28); }
+.detail-top h2 { font-size: clamp(30px, 4vw, 46px); font-weight: 900; letter-spacing: -.015em; margin: 10px 0 14px; }
+.detail-top .sub { font-size: 19px; color: var(--muted); margin: 0 0 22px; }
+.buybox { background: var(--cream); border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; display: grid; gap: 14px; margin-top: 8px; }
+.buybox .row { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.buybox .price { font-size: 38px; }
+.buybox small { color: var(--muted); font-size: 14px; }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 22px 0 0; }
+.fact { border: 1px solid var(--line); border-radius: 14px; padding: 14px; background: var(--cream); }
+.fact b { display: block; font: 900 26px var(--display); }
+.fact span { font-size: 14px; color: var(--muted); }
+
+.problem { max-width: 680px; margin: 70px auto 0; text-align: left; }
+.problem h3 { font-size: clamp(26px, 3.2vw, 34px); font-weight: 900; margin-bottom: 14px; }
+.problem p { margin: 0 0 14px; font-size: 18px; }
+
+.parts { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 54px; }
+.part { border-radius: 18px; padding: 16px 16px 18px; background: color-mix(in srgb, var(--c) 12%, #FBF7F0); border: 1px solid color-mix(in srgb, var(--c) 25%, transparent); display: flex; flex-direction: column; gap: 10px; }
+.part .pic { height: 130px; display: grid; place-items: center; }
+.part .pic img { max-height: 130px; width: auto; }
+.part .num { font: 700 12px var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--c); }
+.part h4 { margin: 0; font: 900 19px/1.15 var(--display); }
+.part ul { margin: 0; padding: 0; list-style: none; font-size: 14px; color: #3D4152; display: grid; gap: 4px; }
+.part li::before { content: "•"; color: var(--c); font-weight: 700; margin-right: 6px; }
+
+.inside { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 70px; align-items: start; }
+.inside h3, .preview h3 { font-size: clamp(24px, 3vw, 32px); font-weight: 900; margin-bottom: 18px; }
+.steps { display: grid; gap: 14px; counter-reset: s; }
+.step { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; }
+.step::before { counter-increment: s; content: counter(s); width: 44px; height: 44px; border-radius: 12px; background: var(--navy); color: var(--gold); display: grid; place-items: center; font: 900 20px var(--display); }
+.step b { display: block; font-size: 17px; }
+.step span { color: var(--muted); font-size: 15.5px; }
+.preview { background: var(--cream); border: 1px solid var(--line); border-radius: 20px; padding: 26px 28px; position: relative; }
+.preview .tag { font: 700 12px var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--money); }
+.preview h4 { font: 700 24px/1.2 Georgia, "Times New Roman", serif; margin: 6px 0 14px; }
+.preview p { margin: 0 0 12px; font-size: 16px; }
+.preview .fade { position: absolute; left: 0; right: 0; bottom: 0; height: 90px; border-radius: 0 0 20px 20px; background: linear-gradient(transparent, var(--cream)); pointer-events: none; }
+.preview-cta { margin-top: 14px; font-weight: 700; color: var(--gold-deep); }
+
+.fit { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 60px; }
+.fit div { border-radius: 18px; padding: 22px 24px; }
+.fit .yes { background: #EAF4EE; }
+.fit .no { background: #F6ECEC; }
+.fit h4 { margin: 0 0 10px; font: 900 19px var(--display); }
+.fit ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 16px; }
+
+.guarantee { margin-top: 60px; display: grid; grid-template-columns: 140px 1fr auto; gap: 24px; align-items: center; background: var(--navy); color: var(--cream); border-radius: 22px; padding: 26px 30px; }
+.seal { width: 124px; height: 124px; border-radius: 50%; background: var(--gold); color: var(--navy); display: grid; place-items: center; text-align: center; box-shadow: 0 0 0 5px var(--navy), 0 0 0 9px var(--gold); }
+.seal > div { display: grid; justify-items: center; gap: 2px; }
+.seal b { font: 900 40px/1 var(--display); }
+.seal span { font: 900 12px/1.1 var(--display); letter-spacing: .06em; }
+.guarantee h3 { font-size: 24px; margin-bottom: 6px; }
+.guarantee p { margin: 0; color: #CDD1E2; }
+
+/* faq */
+.faq { max-width: 760px; margin-inline: auto; display: grid; gap: 12px; }
+details { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 4px 20px; transition: box-shadow .3s ease, border-color .3s ease; }
+details[open] { border-color: #E2CFA6; box-shadow: 0 8px 24px rgba(24,28,44,.06); }
+details .ans { overflow: hidden; }
+summary { cursor: pointer; font-weight: 700; padding: 14px 0; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font: 900 22px/1 var(--display); color: var(--gold-deep); transition: transform .35s ease; }
+details.is-open summary::after { transform: rotate(45deg); }
+details p { margin: 0 0 16px; color: var(--muted); }
+
+/* final */
+.final-badge { width: 112px; height: 112px; margin: 0 auto; border-radius: 50%; background: var(--cream); display: grid; place-items: center; box-shadow: 0 0 0 6px rgba(242,179,61,.35); }
+.final-badge img { height: 84px; width: auto; }
+.final { color: var(--cream); text-align: center; padding: 80px 0; }
+.final h2 { font-size: clamp(32px, 4.6vw, 52px); font-weight: 900; margin: 12px 0 14px; }
+.final p { color: #CDD1E2; margin: 0 auto 28px; max-width: 34em; }
+.final .btns { justify-content: center; }
+footer { background: #10131F; color: #8E93A8; font-size: 14px; padding: 28px 0; }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+footer a { color: #C8CCDC; }
+
+@media (max-width: 900px) {
+  .hero .wrap, .detail-top, .inside { grid-template-columns: 1fr; }
+  .hero-book img { width: min(260px, 60vw); }
+  .parts { grid-template-columns: repeat(2, 1fr); }
+  .guarantee { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+}
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .parts, .fit, .facts { grid-template-columns: 1fr; }
+  section.band { padding: 60px 0; }
+}
+
+/* mobile header bits */
+.top-actions { display: none; align-items: center; gap: 10px; }
+.mini-buy { text-decoration: none; background: var(--gold); color: var(--navy); font: 700 14px var(--body); padding: 8px 14px; border-radius: 999px; white-space: nowrap; }
+.menu-btn { width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); display: grid; place-content: center; gap: 5px; cursor: pointer; padding: 0; }
+.menu-btn span { display: block; width: 20px; height: 2px; border-radius: 2px; background: var(--cream); transition: transform .3s ease, opacity .2s ease; }
+.menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* back to top */
+.to-top { position: fixed; right: 20px; bottom: 22px; z-index: 20; width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer; background: var(--gold); color: var(--navy); display: grid; place-items: center; box-shadow: 0 10px 26px rgba(24,28,44,.35); opacity: 0; transform: translateY(14px) scale(.9); pointer-events: none; transition: opacity .3s ease, transform .3s ease, background .2s ease; }
+.to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { background: #FFC85A; }
+
+@media (max-width: 860px) {
+  .top .wrap { position: relative; }
+  .top-actions { display: flex; }
+  .nav { position: fixed; top: var(--hh, 68px); left: 0; right: 0; max-height: calc(100dvh - var(--hh, 68px)); overflow-y: auto; flex-direction: column; align-items: stretch; gap: 2px; padding: 10px 20px 18px; background: var(--navy); border-bottom: 1px solid rgba(255,255,255,.08); box-shadow: 0 18px 30px rgba(0,0,0,.3); visibility: hidden; opacity: 0; transform: translateY(-8px); transition: opacity .25s ease, transform .25s ease, visibility 0s .25s; }
+  .nav.open { visibility: visible; opacity: 1; transform: none; transition: opacity .25s ease, transform .25s ease; }
+  .nav a, .nav a:not(.cta) { display: block; padding: 13px 14px; font-size: 17px; border-radius: 12px; }
+  .nav a.cta { text-align: center; margin-top: 8px; }
+  body.menu-open .top { background: var(--navy); backdrop-filter: none; }
+  .scrim { position: fixed; inset: 0; z-index: 9; background: rgba(10,12,20,.55); opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility 0s .25s; }
+  body.menu-open .scrim { opacity: 1; visibility: visible; transition: opacity .25s ease; }
+}
+body.lock { position: fixed; left: 0; right: 0; width: 100%; }
+@media (max-width: 900px) {
+  .hero { padding: 40px 0 56px; }
+  .hero .wrap { gap: 32px; text-align: center; }
+  .hero p.lead { margin-inline: auto; }
+  .hero .btns, .trust { justify-content: center; }
+  .detail-top { gap: 32px; }
+  .detail-top .cover { max-width: 320px; margin-inline: auto; }
+  .sec-head { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 560px) {
+  .wrap { width: calc(100% - 32px); }
+  .hero-book img { width: min(220px, 58vw); }
+  .brand { font-size: 16px; }
+  .brand img { width: 32px; height: 32px; }
+  .hero h1 { font-size: 38px; }
+  .eyebrow { letter-spacing: .1em; font-size: 12px; }
+  .hero p.lead { font-size: 17px; }
+  .btns { flex-direction: column; width: 100%; }
+  .btns .btn { justify-content: center; width: 100%; }
+  .trust { gap: 8px 16px; font-size: 13.5px; }
+  .grid { grid-template-columns: 1fr; }
+  .facts { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .fact { padding: 10px; }
+  .fact b { font-size: 22px; }
+  .fact span { font-size: 12.5px; }
+  .buybox .row { flex-direction: column; align-items: stretch; text-align: center; }
+  .buybox .btn { justify-content: center; }
+  .problem { margin-top: 48px; }
+  .problem p { font-size: 16.5px; }
+  .parts { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .part { padding: 12px; }
+  .part .pic { height: 96px; }
+  .part .pic img { max-height: 96px; }
+  .preview { padding: 20px; }
+  .guarantee { padding: 26px 20px; }
+  .guarantee .btn { width: 100%; justify-content: center; }
+  .final { padding: 60px 0; }
+  footer .wrap { flex-direction: column; text-align: center; align-items: center; }
+  .to-top { right: 14px; bottom: 16px; width: 46px; height: 46px; }
+  .mini-buy { padding: 7px 12px; font-size: 13px; }
+}
+@media (max-width: 360px) {
+  .mini-buy { display: none; }
+  .parts { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="assets/logo.jpg" alt="Small Improvement stickman logo"> Small Improvement</a>
+    <div class="top-actions">
+      <a class="mini-buy" href="https://nestuge.com/small-improvements">Buy · $12</a>
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="nav" id="main-nav" aria-label="Main">
+      <a href="#shop">Shop</a>
+      <a href="#small-improvements">The ebook</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://www.youtube.com/@smallimprovement_daily">YouTube</a>
+      <a class="cta" id="nav-buy" href="https://nestuge.com/small-improvements">Get the ebook</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero bits">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">From the Small Improvement YouTube channel</div>
+        <h1>Tiny changes.<br><em>A life that adds up.</em></h1>
+        <p class="lead">You don't need a new life. You need one small change you'll actually keep. Our guides give you simple, tested improvements for your money, career, focus and energy, each with a 7-day challenge so it sticks.</p>
+        <div class="btns">
+          <a class="btn btn-gold" id="hero-buy" href="https://nestuge.com/small-improvements">Get Small Improvements · $12</a>
+          <a class="btn btn-ghost" href="#shop">See all products</a>
+        </div>
+        <div class="trust"><span>Instant PDF download</span><span>7-day money-back guarantee</span><span>Reads great on your phone</span></div>
+      </div>
+      <div class="hero-book"><img src="assets/cover-small-improvements.jpg" alt="Cover of Small Improvements: a stickman cheering at the top of five colored steps"></div>
+    </div>
+  </section>
+
+  <section class="band" id="shop">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2>The shop</h2>
+          <p>Every guide is a quick, practical read with a challenge at the end. Pay securely through Nestuge in your own currency and download right away.</p>
+        </div>
+        <a class="btn btn-dark" href="https://nestuge.me/smallimprovement">Open our Nestuge store</a>
+      </div>
+      <div class="grid" id="product-grid"></div>
+    </div>
+  </section>
+
+  <section class="band detail" id="small-improvements">
+    <div class="wrap">
+      <div class="detail-top">
+        <div class="cover"><img src="assets/cover-small-improvements.jpg" alt="Small Improvements ebook cover"></div>
+        <div>
+          <div class="eyebrow" style="color:var(--gold-deep)">Featured ebook</div>
+          <h2>Small Improvements: 30 tiny changes for your money, career and life</h2>
+          <p class="sub">Most self-improvement plans fail by Thursday because they're too big to survive a normal week. This book does the opposite.</p>
+          <div class="buybox">
+            <div class="row">
+              <div><div class="price">$12</div><small>One-time payment · priced in your currency at checkout</small></div>
+              <a class="btn btn-gold" id="detail-buy" href="https://nestuge.com/small-improvements">Buy now and download</a>
+            </div>
+            <small>Secure checkout on Nestuge. Your download link arrives by email in seconds.</small>
+          </div>
+          <div class="facts">
+            <div class="fact"><b>30</b><span>small improvements</span></div>
+            <div class="fact"><b>72</b><span>pages, 6×9 PDF</span></div>
+            <div class="fact"><b>7</b><span>day challenge per chapter</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="problem">
+        <h3>New diet, new budget, new routine. All starting Monday.</h3>
+        <p>By Thursday, it's gone. Not because you're weak. Because the plan was too big for a normal week.</p>
+        <p>Small Improvements gives you one change at a time, small enough that you can't fail and useful enough that you'll feel the difference. Do one a week and that's 52 in a year.</p>
+      </div>
+
+      <div class="parts" id="parts"></div>
+
+      <div class="inside">
+        <div>
+          <h3>How every chapter works</h3>
+          <div class="steps">
+            <div class="step"><div><b>The problem</b><span>In plain words, so you know it's not just you.</span></div></div>
+            <div class="step"><div><b>The small improvement</b><span>One clear change to make, with real US examples.</span></div></div>
+            <div class="step"><div><b>Why it works</b><span>The reason behind it, so you believe it enough to try.</span></div></div>
+            <div class="step"><div><b>Your 7-day challenge</b><span>A daily action so it becomes a habit, not a nice idea.</span></div></div>
+            <div class="step"><div><b>A quick checklist</b><span>Tick it off, then mark it in the 30-change tracker at the back.</span></div></div>
+          </div>
+        </div>
+        <div class="preview" aria-label="Free preview of Chapter 1">
+          <div class="tag">Free preview · Chapter 1</div>
+          <h4>Pay Yourself Before Anyone Else</h4>
+          <p>Payday comes and you feel rich. You pay a few bills, buy a few things, maybe treat yourself because you worked hard. You promise yourself you'll save whatever is left.</p>
+          <p>But there's never anything left.</p>
+          <p>By the 20th, you're counting what's in your account and waiting. Then the next payday comes, and the same thing happens again. You start to think the problem is your paycheck. Sometimes it is. But very often, the problem is the order.</p>
+          <p>On the same day your money lands, move your savings out first. Before rent. Before groceries. Before your phone bill…</p>
+          <div class="fade"></div>
+        </div>
+      </div>
+
+      <div class="fit">
+        <div class="yes"><h4>This is for you if</h4><ul>
+          <li>You've started big plans and dropped them before</li>
+          <li>You want practical steps, not theory</li>
+          <li>You have 10 minutes a day, not 2 hours</li>
+          <li>You like the Small Improvement videos and want more depth</li>
+        </ul></div>
+        <div class="no"><h4>Skip it if</h4><ul>
+          <li>You want a 300-page deep dive on one topic</li>
+          <li>You're looking for get-rich-quick tricks</li>
+          <li>You won't try even one challenge</li>
+        </ul></div>
+      </div>
+
+      <div class="guarantee">
+        <div class="seal"><div><b>7</b><span>DAY</span><span>GUARANTEE</span></div></div>
+        <div><h3>Try it for a week, risk-free</h3><p>If you read the book and don't find it useful, reply to your purchase email within 7 days and you get a full refund.</p></div>
+        <a class="btn btn-gold" href="https://nestuge.com/small-improvements">Get it for $12</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="faq">
+    <div class="wrap">
+      <div class="sec-head" style="justify-content:center;text-align:center"><div><h2>Questions</h2></div></div>
+      <div class="faq">
+        <details><summary>How do I get the ebook after paying?</summary><div class="ans"><p>Right after checkout you get an email with a "Download your ebook" button. You can also open it any time from your Nestuge purchases.</p></div></details>
+        <details><summary>Can I pay in my own currency?</summary><div class="ans"><p>Yes. The price is $12 and Nestuge shows it in your local currency at checkout.</p></div></details>
+        <details><summary>Does it work on my phone?</summary><div class="ans"><p>Yes. It's a 6×9-inch PDF, a size that reads comfortably on phones, tablets and computers.</p></div></details>
+        <details><summary>What if it isn't for me?</summary><div class="ans"><p>Reply to your purchase confirmation email within 7 days for a full refund.</p></div></details>
+        <details><summary>Is this the same as the YouTube videos?</summary><div class="ans"><p>The videos give you one quick idea. The book goes deeper: 30 improvements, each with the reasoning, a 7-day challenge, a checklist and a tracker to follow your progress.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final bits">
+    <div class="wrap">
+      <div class="final-badge"><img src="assets/stick-cheer.png" alt=""></div>
+      <h2>Start with one small change today.</h2>
+      <p>Pick one chapter, do it for seven days, then pick the next. That's the whole system.</p>
+      <div class="btns">
+        <a class="btn btn-gold" href="https://nestuge.com/small-improvements">Get Small Improvements · $12</a>
+        <a class="btn btn-ghost" href="https://www.youtube.com/@smallimprovement_daily">Watch on YouTube</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="scrim" id="scrim" aria-hidden="true"></div>
+<button class="to-top" id="to-top" type="button" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 5l-7 7m7-7l7 7M12 5v14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Small Improvement. Payments and delivery by Nestuge.</span>
+    <span><a href="https://nestuge.me/smallimprovement">Nestuge store</a> · <a href="https://www.youtube.com/@smallimprovement_daily">YouTube</a></span>
+  </div>
+</footer>
+
+<script>
+/* ===== PRODUCTS: add one entry here for every new product ===== */
+const PRODUCTS = [
+  {
+    id: "small-improvements",
+    title: "Small Improvements",
+    subtitle: "30 tiny changes for your money, career and life, each with a 7-day challenge.",
+    tag: "Bestseller",
+    price: "$12",
+    cover: "assets/cover-small-improvements.jpg",
+    buyUrl: "https://nestuge.com/small-improvements",
+    detailAnchor: "#small-improvements"
+  }
+  // { id: "next-ebook", title: "...", subtitle: "...", tag: "New", price: "$9",
+  //   cover: "assets/cover-next.jpg", buyUrl: "https://nestuge.com/next-ebook" },
+];
+
+const PARTS = [
+  { c: "var(--money)",  n: "Part 1", t: "Money",  img: "assets/part-money.png",  items: ["Pay yourself first", "The 24-hour rule", "Find your money leak"] },
+  { c: "var(--career)", n: "Part 2", t: "Career", img: "assets/part-career.png", items: ["The one-page proof", "The Friday update", "Keep a wins file"] },
+  { c: "var(--focus)",  n: "Part 3", t: "Focus",  img: "assets/part-focus.png",  items: ["Phone in another room", "“This is done when…”", "One big thing a day"] },
+  { c: "var(--energy)", n: "Part 4", t: "Energy", img: "assets/part-energy.png", items: ["Same wake-up time", "Skip the snooze", "Daylight first"] },
+  { c: "var(--people)", n: "Part 5", t: "People", img: "assets/part-mind.png",   items: ["Tiny promises", "Use their name", "Listen to the end"] }
+];
+
+const esc = s => String(s).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+
+document.getElementById("product-grid").innerHTML = PRODUCTS.map(p => `
+  <article class="card">
+    <div class="art"><img src="${esc(p.cover)}" alt="${esc(p.title)} cover"></div>
+    <div class="body">
+      ${p.tag ? `<span class="chip">${esc(p.tag)}</span>` : ""}
+      <h3>${esc(p.title)}</h3>
+      <p>${esc(p.subtitle)}</p>
+      ${p.detailAnchor ? `<a href="${esc(p.detailAnchor)}" style="font-size:15px;font-weight:700;color:var(--gold-deep)">See what's inside</a>` : ""}
+      <div class="row"><span class="price">${esc(p.price)}</span><a class="btn btn-gold" href="${esc(p.buyUrl)}">Buy now</a></div>
+    </div>
+  </article>`).join("") + `
+  <article class="card soon">
+    <img src="assets/stick-cheer.png" alt="">
+    <h3>More guides coming</h3>
+    <p>New small-improvement guides are on the way. Subscribe on YouTube to hear first.</p>
+    <a class="btn btn-dark" href="https://www.youtube.com/@smallimprovement_daily">Watch the channel</a>
+  </article>`;
+
+document.getElementById("parts").innerHTML = PARTS.map(p => `
+  <div class="part" style="--c:${p.c}">
+    <div class="pic"><img src="${p.img}" alt="Stickman illustration for ${p.t}"></div>
+    <div class="num">${p.n}</div>
+    <h4>${p.t}</h4>
+    <ul>${p.items.map(i => `<li>${i}</li>`).join("")}</ul>
+  </div>`).join("");
+
+
+
+/* hamburger menu */
+(function () {
+  const btn = document.getElementById("menu-btn"), nav = document.getElementById("main-nav");
+  const top = document.querySelector(".top");
+  const setH = () => document.documentElement.style.setProperty("--hh", top.getBoundingClientRect().height + "px");
+  setH(); addEventListener("resize", setH);
+  let savedY = 0;
+  const setOpen = open => {
+    nav.classList.toggle("open", open);
+    document.body.classList.toggle("menu-open", open);
+    if (open && !document.body.classList.contains("lock")) {
+      savedY = window.scrollY;
+      document.body.style.top = (-savedY) + "px";
+      document.body.classList.add("lock");
+    } else if (!open && document.body.classList.contains("lock")) {
+      document.body.classList.remove("lock");
+      document.body.style.top = "";
+      document.documentElement.style.scrollBehavior = "auto";
+      window.scrollTo(0, savedY);
+      document.documentElement.style.scrollBehavior = "";
+    }
+    btn.setAttribute("aria-expanded", String(open));
+    btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  };
+  const close = () => setOpen(false);
+  btn.addEventListener("click", () => { setH(); setOpen(!nav.classList.contains("open")); });
+  nav.querySelectorAll("a").forEach(a => a.addEventListener("click", e => {
+    const href = a.getAttribute("href");
+    if (href && href.startsWith("#") && document.body.classList.contains("lock")) {
+      e.preventDefault(); close();
+      const t = document.querySelector(href);
+      if (t) requestAnimationFrame(() => t.scrollIntoView({ behavior: "smooth" }));
+    } else close();
+  }));
+  document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+  document.addEventListener("click", e => { if (!nav.contains(e.target) && !btn.contains(e.target)) close(); });
+  matchMedia("(min-width: 861px)").addEventListener("change", close);
+})();
+
+/* back to top */
+(function () {
+  const b = document.getElementById("to-top");
+  const onScroll = () => b.classList.toggle("show", window.scrollY > 600);
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  b.addEventListener("click", () => window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
+})();
+
+/* smooth FAQ accordion */
+document.querySelectorAll(".faq details").forEach(d => {
+  const sum = d.querySelector("summary"), ans = d.querySelector(".ans");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let anim = null;
+  sum.addEventListener("click", e => {
+    e.preventDefault();
+    if (anim) anim.cancel();
+    const opening = !d.open;
+    if (opening) { d.open = true; d.classList.add("is-open"); }
+    else d.classList.remove("is-open");
+    const h = ans.scrollHeight;
+    if (reduce) { if (!opening) d.open = false; return; }
+    anim = ans.animate(
+      opening ? [{ height: "0px", opacity: 0 }, { height: h + "px", opacity: 1 }]
+              : [{ height: h + "px", opacity: 1 }, { height: "0px", opacity: 0 }],
+      { duration: 380, easing: "cubic-bezier(.2,.7,.2,1)" });
+    anim.onfinish = () => { if (!opening) d.open = false; anim = null; };
+  });
+});
+
+/* subtle 0101 small improvements texture for the navy bands */
+(function () {
+  const c = document.createElement("canvas"), w = 640, h = 320;
+  c.width = w; c.height = h;
+  const x = c.getContext("2d");
+  x.fillStyle = "#181C2C"; x.fillRect(0, 0, w, h);
+  x.font = "13px ui-monospace, Menlo, Consolas, monospace";
+  const seq = "0101010101 small improvements ";
+  const cw = 8, rh = 20;
+  for (let r = 0; r * rh < h; r++) {
+    const off = (r * 9) % seq.length;
+    for (let i = 0; i * cw < w; i++) {
+      const ch = seq[(i + off) % seq.length];
+      if (ch === " ") continue;
+      const word = !"01".includes(ch);
+      x.fillStyle = word ? "rgba(242,179,61,.16)" : "rgba(170,180,210,.10)";
+      x.fillText(ch, i * cw, r * rh + 14);
+    }
+  }
+  const url = c.toDataURL();
+  document.querySelectorAll(".bits").forEach(el => el.style.backgroundImage = `url(${url})`);
+})();
+</script>
+</body>
+</html>
