@@ -612,6 +612,20 @@ document.querySelectorAll(".faq details").forEach(d => {
   const url = c.toDataURL();
   document.querySelectorAll(".bits").forEach(el => el.style.backgroundImage = `url(${url})`);
 })();
+
+/* ===== Open every external link in a new tab ===== */
+function markExternalLinks(root) {
+  (root || document).querySelectorAll('a[href]').forEach(function (a) {
+    var u;
+    try { u = new URL(a.getAttribute('href'), location.href); } catch (e) { return; }
+    if ((u.protocol === 'http:' || u.protocol === 'https:') && u.host !== location.host) {
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+    }
+  });
+}
+markExternalLinks();
+new MutationObserver(function () { markExternalLinks(); }).observe(document.body, { childList: true, subtree: true });
 </script>
 </body>
 </html>
