@@ -442,9 +442,20 @@ body.lock { position: fixed; left: 0; right: 0; width: 100%; }
 /* ===== PRODUCTS: add one entry here for every new product ===== */
 const PRODUCTS = [
   {
+    id: "start-small",
+    title: "Start Small (free guide)",
+    subtitle: "Not sure where to begin? 5 small improvements you can make this week, one from each ebook, plus a 7-day checklist.",
+    tag: "Free",
+    price: "Free",
+    btn: "Get it free",
+    cover: "assets/cover-start-small.jpg",
+    buyUrl: "https://nestuge.com/start-small",
+    detailAnchor: "https://nestuge.com/start-small"
+  },
+  {
     id: "small-improvement-library",
     title: "The Small Improvement Library",
-    subtitle: "All 5 ebooks in one bundle: money, career, phone, boundaries and habits. $57 if bought separately.",
+    subtitle: "All 5 ebooks in one bundle: money, career, phone, boundaries and habits. $55 if bought separately.",
     tag: "Best value",
     price: "$29",
     cover: "assets/cover-small-improvement-library.jpg",
@@ -523,7 +534,7 @@ document.getElementById("product-grid").innerHTML = PRODUCTS.map(p => `
       <h3>${esc(p.title)}</h3>
       <p>${esc(p.subtitle)}</p>
       ${p.detailAnchor ? `<a href="${esc(p.detailAnchor)}" style="font-size:15px;font-weight:700;color:var(--gold-deep)">See what's inside</a>` : ""}
-      <div class="row"><span class="price">${esc(p.price)}</span><a class="btn btn-gold" href="${esc(p.buyUrl)}">Buy now</a></div>
+      <div class="row"><span class="price">${esc(p.price)}</span><a class="btn btn-gold" href="${esc(p.buyUrl)}">${esc(p.btn || "Buy now")}</a></div>
     </div>
   </article>`).join("") + `
   <article class="card soon">
